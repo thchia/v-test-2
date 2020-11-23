@@ -7,12 +7,11 @@ jobs:
   include:
     - stage: build
       script: npm run build
-    - stage: pre-deploy
-      script: npm i -g vercel
     - stage: deploy-stage
       if: branch = staging
       env: PREVIEW_URL=https://v-test-2-staging.vercel.app
       script:
+        - npm i -g vercel
         - DEPLOY_URL=$(vercel --confirm -t $VERCEL_TOKEN)
         - vercel alias set $DEPLOY_URL $PREVIEW_URL -t $VERCEL_TOKEN
         
