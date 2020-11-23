@@ -8,8 +8,7 @@ jobs:
     - stage: build
       script: npm run build
     - stage: deploy-stage
-      if: branch = staging
-      if: type = push
+      if: branch = staging AND type = push
       env: PREVIEW_URL=v-test-2-staging.vercel.app
       script:
         - npm i -g vercel
