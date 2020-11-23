@@ -3,7 +3,19 @@ node_js:
   - 12
 install:
   - npm install
-script:
-  - npm run build
-  - npm i -g vercel
-  - vercel --confirm -t $VERCEL_TOKEN
+jobs:
+  include:
+    - stage: build
+      script: npm run build
+    - stage: deploy-stage
+      if: branch = staging AND type = push
+      env: PREVIEW_URL=v-test-2-staging.vercel.app
+      script:
+        - npm i -g vercel
+        - DEPLOY_URL=$(vercel --confirm -t $VERCEL_TOKEN)
+        - vercel alias set $DEPLOY_URL $PREVIEW_URL -t $VERCEL_TOKEN
+    - stage: deploy-prod
+      if: branch = main AND type = push
+      script:
+        - npm i -g vercel
+        - vercel --prod --confirm -t $VERCEL_TOKEN
