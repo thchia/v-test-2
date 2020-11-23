@@ -14,4 +14,8 @@ jobs:
         - npm i -g vercel
         - DEPLOY_URL=$(vercel --confirm -t $VERCEL_TOKEN)
         - vercel alias set $DEPLOY_URL $PREVIEW_URL -t $VERCEL_TOKEN
-        
+    - stage: deploy-prod
+      if: branch = main AND type = push
+      script:
+        - npm i -g vercel
+        - vercel --prod --confirm -t $VERCEL_TOKEN
