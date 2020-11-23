@@ -19,3 +19,7 @@ jobs:
       script:
         - npm i -g vercel
         - vercel --prod --confirm -t $VERCEL_TOKEN
+    - stage: clean-deploys
+      script:
+        - npm i -g vercel
+        - vercel remove v-test-2 --safe -t $VERCEL_TOKEN || true
