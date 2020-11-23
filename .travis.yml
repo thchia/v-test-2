@@ -9,7 +9,7 @@ jobs:
       script: npm run build
     - stage: deploy-stage
       if: branch = staging
-      env: PREVIEW_URL=https://v-test-2-staging.vercel.app
+      env: PREVIEW_URL=v-test-2-staging.vercel.app
       script:
         - npm i -g vercel
         - DEPLOY_URL=$(vercel --confirm -t $VERCEL_TOKEN)
